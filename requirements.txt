@@ -1,5 +1,0 @@
-mlflow
-scikit-learn
-pandas
-boto3
-pytest
