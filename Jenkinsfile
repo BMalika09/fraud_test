@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository
-                git branch: 'main', url: 'git@github.com:BMalika09/fraud_proj.git'
+                git branch: 'main', url: 'https://github.com/BMalika09/fraud_proj.git'
             }
         }
 
