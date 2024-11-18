@@ -1,10 +1,10 @@
 import pandas as pd
-import numpy as np
-import joblib
+#import numpy as np
+#import joblib
 import mlflow
 import time
-from sqlalchemy import Column, Integer
-import xgboost as xgb
+#from sqlalchemy import Column, Integer
+#import xgboost as xgb
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
@@ -99,7 +99,7 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     experiment = mlflow.get_experiment_by_name(experiment_name)
     if experiment is None:
         experiment = mlflow.create_experiment(experiment_name)
-    #mlflow.set_tracking_uri("https://malika09-mlflow-server-frauddetection.hf.space")
+    mlflow.set_tracking_uri("https://malika09-mlflow-server-frauddetection.hf.space")
     #mlflow.set_tracking_uri("sqlite:///mlflow.db")
     experiment_id = "0"
 
