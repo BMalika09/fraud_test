@@ -48,6 +48,21 @@ pipeline {
                 }
             }
         }
+        stage('Run Training') {
+    steps {
+        withCredentials([
+            string(credentialsId: 'mlflow-tracking-uri', variable: 'MLFLOW_TRACKING_URI'),
+            string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
+            string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')
+        ]) {
+            sh '''
+            docker run --rm --env-file env.list \
+            ml-pipeline-image \
+            bash -c "python app/train.py"
+            '''
+        }
+    }
+}
     }
 
     post {
