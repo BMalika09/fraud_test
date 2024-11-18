@@ -3,4 +3,3 @@ scikit-learn
 pandas
 boto3
 pytest
-loggin
