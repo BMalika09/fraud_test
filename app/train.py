@@ -94,15 +94,15 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     pipe = pipeline()
     #experiment_id = str(np.random.randint(1, 1000000))
     # Set experiment's info 
-    mlflow.set_experiment(experiment_name)
 
     # Get our experiment info
     experiment = mlflow.get_experiment_by_name(experiment_name)
     if experiment is None:
         experiment = mlflow.create_experiment(experiment_name)
+    mlflow.set_experiment(experiment_name)
     
     mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
-    #mlflow.set_tracking_uri("https://malika09-mlflow-server-frauddetection.hf.space")
+    mlflow.set_tracking_uri("https://malika09-mlflow-server-frauddetection.hf.space")
     #mlflow.set_tracking_uri("sqlite:///mlflow.db")
     experiment_id = "0"
 
