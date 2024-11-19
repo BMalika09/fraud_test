@@ -55,7 +55,8 @@ pipeline {
                     string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY'),
                     string(credentialsId: 'backend-store-uri', variable: 'BACKEND_STORE_URI'),
-                    string(credentialsId: 'artifact-root', variable: 'ARTIFACT_STORE_URI')
+                    string(credentialsId: 'artifact-root', variable: 'ARTIFACT_STORE_URI'),
+                    string(credentialsId: 'port', variable: 'PORT')
                 ]) {
                     // Write environment variables to a temporary file
                     // KEEP SINGLE QUOTE FOR SECURITY PURPOSES (MORE INFO HERE: https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#handling-credentials)
@@ -66,6 +67,7 @@ pipeline {
                         AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
                         BACKEND_STORE_URI=$BACKEND_STORE_URI
                         ARTIFACT_ROOT=$ARTIFACT_STORE_URI
+                        PORT=$PORT
                         '''
                     }
                     sh '''
