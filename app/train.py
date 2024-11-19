@@ -104,6 +104,11 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     #mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
     mlflow.set_tracking_uri(mlflow_tracking_uri)
     #mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    mlflow_tracking_uri = os.getenv('MLFLOW_TRACKING_URI')
+    os.getenv('AWS_ACCESS_KEY_ID')
+    os.getenv('AWS_SECRET_ACCESS_KEY')
+    os.getenv('BACKEND_STORE_URI')
+    os.getenv('ARTIFACT_STORE_URI')
 
 
     experiment_id = "0"
@@ -129,12 +134,6 @@ if __name__ == "__main__":
 }
     artifact_path = "fraud_detection/rf_v1"
     registered_model_name = "rf_model"
-
-    mlflow_tracking_uri = os.getenv('MLFLOW_TRACKING_URI')
-    aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
-    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-    backend_store_uri = os.getenv('BACKEND_STORE_URI')
-    artifact_store_uri = os.getenv('ARTIFACT_STORE_URI')
 
     # Run the experiment
     run_experiment(experiment_name, data_url, param_grid, artifact_path, registered_model_name)
