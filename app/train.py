@@ -13,6 +13,7 @@ from sklearn.preprocessing import  OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
 import logging
+import os
 
 """from sklearn.metrics import (
     accuracy_score,
@@ -99,6 +100,8 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     experiment = mlflow.get_experiment_by_name(experiment_name)
     if experiment is None:
         experiment = mlflow.create_experiment(experiment_name)
+    
+    mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
     #mlflow.set_tracking_uri("https://malika09-mlflow-server-frauddetection.hf.space")
     #mlflow.set_tracking_uri("sqlite:///mlflow.db")
     experiment_id = "0"
