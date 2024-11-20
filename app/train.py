@@ -102,9 +102,10 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     mlflow.set_experiment(experiment_name)
     
     #mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
-    mlflow.set_tracking_uri(mlflow_tracking_uri)
+    
     #mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow_tracking_uri = os.getenv('MLFLOW_TRACKING_URI')
+    mlflow.set_tracking_uri(mlflow_tracking_uri)
     os.getenv('AWS_ACCESS_KEY_ID')
     os.getenv('AWS_SECRET_ACCESS_KEY')
     os.getenv('BACKEND_STORE_URI')
