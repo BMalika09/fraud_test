@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository
-                git branch: 'main', url: 'https://github.com/BMalika09/fraud_proj.git'
+                git branch: 'main', url: 'https://github.com/BMalika09/fraud_test.git'
             }
         }
 
@@ -73,7 +73,7 @@ pipeline {
                     sh '''
                     docker run --rm --env-file env.list \
                     ml-pipeline-image \
-                    bash -c "python app/train.py"
+                    bash -c "python app/train.py --verbose"
                     '''
         }
     }
