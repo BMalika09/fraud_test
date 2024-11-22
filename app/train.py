@@ -96,7 +96,7 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     # Set experiment's info 
 
     # Get our experiment info
-    experiment = mlflow.get_experiment_by_name(experiment_name)
+    experiment = mlflow.set_experiment(experiment_name)
     if experiment is None:
         experiment = mlflow.create_experiment(experiment_name)
     mlflow.set_experiment(experiment_name)
@@ -112,12 +112,12 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_SECRET_ACCESS_KEY
 
 
-    experiment_id = "0"
+    #experiment_id = "0"
 
     # Call mlflow autolog
     mlflow.sklearn.autolog()
 
-    with mlflow.start_run(experiment_id= experiment_id ):
+    with mlflow.start_run():
         # Train model
         model = train_model(pipe, X_train, y_train, param_grid)
         log_metrics_and_model(model, X_train, y_train, X_test, y_test, artifact_path, registered_model_name)
