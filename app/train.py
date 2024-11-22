@@ -102,10 +102,12 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     mlflow.set_experiment(experiment_name)
     
     #mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
-    from key import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+    #from key import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
     #mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow_tracking_uri = 'https://malika09-mlflow-server-frauddetection.hf.space'
     mlflow.set_tracking_uri(mlflow_tracking_uri)
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     os.environ["AWS_ACCESS_KEY_ID"] = AWS_ACCESS_KEY_ID
     os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_SECRET_ACCESS_KEY
 
