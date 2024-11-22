@@ -61,14 +61,14 @@ pipeline {
                     // Write environment variables to a temporary file
                     // KEEP SINGLE QUOTE FOR SECURITY PURPOSES (MORE INFO HERE: https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#handling-credentials)
                     script {
-                        writeFile file: 'env.list', text: '''
+                        writeFile file: 'env.list', text: """
                         MLFLOW_TRACKING_URI=$MLFLOW_TRACKING_URI
                         AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                         AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
                         BACKEND_STORE_URI=$BACKEND_STORE_URI
                         ARTIFACT_ROOT=$ARTIFACT_STORE_URI
                         PORT=$PORT
-                        '''
+                        """
                     }
                     sh '''
                     docker run --rm --env-file env.list \
