@@ -106,12 +106,8 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     #mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow_tracking_uri = 'https://malika09-mlflow-server-frauddetection.hf.space'
     mlflow.set_tracking_uri(mlflow_tracking_uri)
-    AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
-    if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
-        raise ValueError("AWS credentials are not set correctly. Please ensure that AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are defined.")
-    #os.getenv('BACKEND_STORE_URI')
-    #os.getenv('ARTIFACT_STORE_URI')
+    os.environ["AWS_ACCESS_KEY_ID"] = AWS_ACCESS_KEY_ID
+    os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_SECRET_ACCESS_KEY
 
 
     experiment_id = "0"
@@ -119,7 +115,7 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     # Call mlflow autolog
     mlflow.sklearn.autolog()
 
-    with mlflow.start_run(experiment_id=experiment_id):
+    with mlflow.start_run(experiment_id= experiment_id ):
         # Train model
         model = train_model(pipe, X_train, y_train, param_grid)
         log_metrics_and_model(model, X_train, y_train, X_test, y_test, artifact_path, registered_model_name)

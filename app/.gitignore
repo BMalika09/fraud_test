@@ -1,6 +1,8 @@
 df.csv
-train2.py
 mlflow.db
 secrets.sh 
 train3.py
 __pycache__
+train2.py
+key.py
+essaie_train.py
