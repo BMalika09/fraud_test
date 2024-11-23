@@ -75,8 +75,8 @@ def log_metrics_and_model(model, X_train, y_train, X_test, y_test, artifact_path
     y_train_pred = model.predict(X_train)
     y_test_pred = model.predict(X_test)
     
-    train_f1 = f1_score(y_train, y_train_pred, average='weighted')
-    test_f1 = f1_score(y_test, y_test_pred, average='weighted')
+    train_f1 = f1_score(y_train, y_train_pred)
+    test_f1 = f1_score(y_test, y_test_pred)
     
     # Log
     mlflow.log_metric("Train F1 Score", train_f1)
