@@ -136,22 +136,15 @@ if __name__ == "__main__":
     experiment_name = "hyperparameter_tuning2"
     data_url = "https://fraud-proj-s3.s3.us-east-1.amazonaws.com/df.csv"
     param_grid = {
-        'learning_rate': [0.1],       
-        'max_depth': [10],
-        'n_estimators': [100],
-        'subsample': [0.8],
-        'colsample_bytree': [0.8],
-        'gamma': [1]
-    }   
+        'classifier__learning_rate': [0.1],       
+        'classifier__max_depth': [10],
+        'classifier__n_estimators': [100],
+        'classifier__subsample': [0.8],
+        'classifier__colsample_bytree': [0.8],
+        'classifier__gamma': [1]
+    }
     artifact_path = "fraud_detection/xgb"
     registered_model_name = "xgb_classifier"
 
     # Run the experiment
     run_experiment(experiment_name, data_url, param_grid, artifact_path, registered_model_name)
-
-
-
-
-
-
-
