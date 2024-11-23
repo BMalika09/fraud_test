@@ -4,13 +4,14 @@ import pandas as pd
 import mlflow
 import time
 #from sqlalchemy import Column, Integer
-#import xgboost as xgb
+import xgboost as xgb
+from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import  OneHotEncoder, StandardScaler
 #from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
+#from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
 import logging
 import os
@@ -56,7 +57,7 @@ def pipeline():
                 ('num', StandardScaler(), numeric_features),
                 ('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), categorical_features)
             ])),
-        ('classifier', RandomForestClassifier())
+        ('classifier', xgb.XGBClassifier())
     ])
 
     return processor
@@ -71,8 +72,15 @@ def train_model(pipe, X_train, y_train, param_grid, cv=3, n_jobs=-1, verbose=1):
 # Log metrics and model to MLflow
 def log_metrics_and_model(model, X_train, y_train, X_test, y_test, artifact_path, registered_model_name):
     
-    mlflow.log_metric("Train Score", model.score(X_train, y_train))
-    mlflow.log_metric("Test Score", model.score(X_test, y_test))
+    y_train_pred = model.predict(X_train)
+    y_test_pred = model.predict(X_test)
+    
+    train_f1 = f1_score(y_train, y_train_pred, average='weighted')
+    test_f1 = f1_score(y_test, y_test_pred, average='weighted')
+    
+    # Log
+    mlflow.log_metric("Train F1 Score", train_f1)
+    mlflow.log_metric("Test F1 Score", test_f1)
     mlflow.sklearn.log_model(
         sk_model=model,
         artifact_path=artifact_path,
@@ -92,10 +100,8 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     # Create pipeline
     logging.info("Prétraitement terminé. Création du pipeline...")
     pipe = pipeline()
-    #experiment_id = str(np.random.randint(1, 1000000))
-    # Set experiment's info 
+    
 
-    # Get our experiment info
     experiment = mlflow.set_experiment(experiment_name)
     if experiment is None:
         experiment = mlflow.create_experiment(experiment_name)
@@ -112,7 +118,6 @@ def run_experiment(experiment_name, data_url, param_grid, artifact_path, registe
     os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_SECRET_ACCESS_KEY
 
 
-    #experiment_id = "0"
 
     # Call mlflow autolog
     mlflow.sklearn.autolog()
@@ -131,10 +136,15 @@ if __name__ == "__main__":
     experiment_name = "hyperparameter_tuning2"
     data_url = "https://fraud-proj-s3.s3.us-east-1.amazonaws.com/df.csv"
     param_grid = {
-        "classifier__n_estimators": list(range(90, 101, 10))
-}
-    artifact_path = "fraud_detection/rf_v1"
-    registered_model_name = "rf_model"
+        'learning_rate': [0.1],       
+        'max_depth': [10],
+        'n_estimators': [100],
+        'subsample': [0.8],
+        'colsample_bytree': [0.8],
+        'gamma': [1]
+    }   
+    artifact_path = "fraud_detection/xgb"
+    registered_model_name = "xgb_classifier"
 
     # Run the experiment
     run_experiment(experiment_name, data_url, param_grid, artifact_path, registered_model_name)
