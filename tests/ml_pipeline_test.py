@@ -2,7 +2,7 @@ import pytest
 from unittest import mock
 from app.train import load_data, preprocess, pipeline, train_model
 from sklearn.preprocessing import StandardScaler
-
+import xgboost as xgb
 # Test data loading
 def test_load_data():
     url = "https://fraud-proj-s3.s3.us-east-1.amazonaws.com/df.csv"
